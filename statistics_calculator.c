@@ -58,7 +58,8 @@ char get_yes_no() {
 int main() {
     int main_choice;
     char repeat_main;
-
+    int data[100], jumlah_data;
+	
     do {
         // main dashboard
         printf("Advanced Statistics Calculator\n");
