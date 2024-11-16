@@ -58,6 +58,7 @@ char get_yes_no() {
 int main() {
     int main_choice;
     char repeat_main;
+	int data[1000], jumlah_data; #pake ini ya declare nya
 
     do {
         // main dashboard
