@@ -210,23 +210,56 @@ void continuous_distribution() {
 }
 
 // formula funcs (implementation placeholders)
-void calculate_mean() { 
-	printf("Calculating Mean\n"); 
+int calculate_mean(int data[], int n) { 
+	int i,total=0;
+	float mean;
+	for(i=0;i<n;i++){
+		total+=data[i];
+	}
+	mean=total/n;
+	printf("Mean = %.2f\n",mean); 
 }
-void calculate_median() {
-	printf("Calculating Median\n"); 
+int calculate_median(int data[], int n) {
+	int posisi;
+	float median;
+	if(n%2 != 0){
+		posisi=(n+1)/2;
+		median=data[posisi];
+	}else{
+		posisi=n/2;
+		median=(data[posisi]+data[posisi+1])/2;
+	}
+	printf("Median = %.2f\n", median); 
 }
 void calculate_mode() { 
 	printf("Calculating Mode\n"); 
 }
-void calculate_quartile1() { 
-	printf("Calculating Quartile 1\n"); 
+int calculate_quartile1() { 
+	int posisi;
+	float quartile1;
+	if(n%2 != 0){
+		posisi=(n+1)/4;
+		median=data[posisi];
+	}else{
+		posisi=n/4;
+		median=(data[posisi]+data[posisi+1])/2;
+	}
+	printf("Median = %.2f\n", quartile1); 
 }
-void calculate_quartile3() {
-	printf("Calculating Quartile 3\n"); 
+int calculate_quartile3(int data[], int n) {
+	int posisi;
+	float quartile3;
+	if(n%2 != 0){
+		posisi=3*(n+1)/4;
+		median=data[posisi];
+	}else{
+		posisi=3*n/4;
+		median=(data[posisi]+data[posisi+1])/2;
+	}
+	printf("Median = %.2f\n", quartile3);  
 }
-void calculate_range() { 
-	printf("Calculating Range\n"); 
+int calculate_range(int data[], int n) { 
+	printf("Range = %d\n",data[n] - data[0]); 
 }
 void calculate_interquartile_range() { 
 	printf("Calculating Interquartile Range\n"); 
