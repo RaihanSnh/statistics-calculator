@@ -168,7 +168,6 @@ void calculate_interquartile_range(int data[], int n) {
     printf("Interquartile Range = %.2f\n", interq);
 }
 
-// Implementasi placeholder untuk fungsi lainnya
 // void calculate_variance(int data[], int n) { printf("Calculating Variance\n"); }
 // void calculate_standard_deviation(int data[], int n) { printf("Calculating Standard Deviation\n"); }
 // void calculate_coefficient_variance(int data[], int n) { printf("Calculating Coefficient of Variance\n"); }
