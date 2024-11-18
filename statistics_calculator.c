@@ -1,35 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-// func declarations for population & sample distributions
-void population_distribution();
-void sample_distribution();
-
-// func declarations for probability distributions
-void discrete_distribution();
-void continuous_distribution();
-
-// common formula funcs (these can be reused in different categories)
-void calculate_mean();
-void calculate_median();
-void calculate_mode();
-void calculate_quartile1();
-void calculate_quartile3();
-void calculate_range();
-void calculate_interquartile_range();
-void calculate_variance();
-void calculate_standard_deviation();
-void calculate_coefficient_variance();
-void calculate_z_score();
-void calculate_standard_error();
-
-// discrete probability distribution funcs
-void binomial_distribution();
-void poisson_distribution();
-void hypergeometric_distribution();
-
-// continuous probability distribution funcs
-void normal_distribution();
-void uniform_distribution();
+// Fungsi untuk kalkulasi statistik umum
+void calculate_mean(int data[], int n);
+void calculate_median(int data[], int n);
+void calculate_mode(int data[], int n);
+void calculate_quartile1(int data[], int n);
+void calculate_quartile3(int data[], int n);
+void calculate_range(int data[], int n);
+void calculate_interquartile_range(int data[], int n);
+// void calculate_variance(int data[], int n);
+// void calculate_standard_deviation(int data[], int n);
+// void calculate_coefficient_variance(int data[], int n);
+// void calculate_z_score(int data[], int n);
+void all(int data[], int n);
 
 int get_choice(int min, int max) {
     int choice;
@@ -55,42 +39,58 @@ char get_yes_no() {
     }
 }
 
+void sort(int arr[], int n) {
+    int temp;
+    for (int i = 0; i < n-1; i++) {
+        for (int j = i+1; j < n; j++) {
+            if (arr[i] > arr[j]) {
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
 int main() {
     int main_choice;
     char repeat_main;
-    int data[100], jumlah_data;
-	
+    int data[100], jumlah_data, i;
+
+    printf("Welcome to Statistics Calculator\n");
+    printf("Masukan jumlah data: ");
+    scanf("%d", &jumlah_data);
+    printf("Masukan data:\n");
+    for(i = 0; i < jumlah_data; i++) {
+        scanf("%d", &data[i]);
+    }
+
     do {
-        // main dashboard
-        printf("Advanced Statistics Calculator\n");
-        printf("1. Population Distribution\n");
-        printf("2. Sample Distribution\n");
-        printf("3. Discrete Probability Distribution\n");
-        printf("4. Continuous Probability Distribution\n");
-        printf("5. Exit\n");
-        printf("Enter your choice (1-5): ");
-        main_choice = get_choice(1, 5);
+        printf("Menu\n");
+        printf("1.  Mean\n2.  Median\n3.  Mode\n4.  Quartile 1\n5.  Quartile 3\n6.  Range\n7.  Interquartile Range\n");
+        printf("8.  Variance\n9.  Standard Deviation\n10. Coefficient of Variance\n11. Z Score\n12. All\n");
+        printf("0.  Exit\n");
+        printf("Enter your choice (0-12): ");
+        main_choice = get_choice(0, 12);
 
         switch (main_choice) {
-            case 1:
-                population_distribution();
-                break;
-            case 2:
-                sample_distribution();
-                break;
-            case 3:
-                discrete_distribution();
-                break;
-            case 4:
-                continuous_distribution();
-                break;
-            case 5:
-                printf("Exiting calculator.\n");
-                return 0;
+            case 1: calculate_mean(data, jumlah_data); break;
+            case 2: calculate_median(data, jumlah_data); break;
+            case 3: calculate_mode(data, jumlah_data); break;
+            case 4: calculate_quartile1(data, jumlah_data); break;
+            case 5: calculate_quartile3(data, jumlah_data); break;
+            case 6: calculate_range(data, jumlah_data); break;
+            case 7: calculate_interquartile_range(data, jumlah_data); break;
+            // case 8: calculate_variance(data, jumlah_data); break;
+            // case 9: calculate_standard_deviation(data, jumlah_data); break;
+            // case 10: calculate_coefficient_variance(data, jumlah_data); break;
+            // case 11: calculate_z_score(data, jumlah_data); break;
+            case 12: all(data, jumlah_data); break;
+            case 0:
+                printf("Exit from Menu!\n");
         }
 
-        // ask user if they want to go back to the main dashboard
-        printf("Do you want to go back to the main dashboard? (y/n): ");
+        printf("Do you want to go back to the Menu? (y/n): ");
         repeat_main = get_yes_no();
 
     } while (repeat_main == 'y' || repeat_main == 'Y');
@@ -99,199 +99,93 @@ int main() {
     return 0;
 }
 
-// population distribution menu
-void population_distribution() {
-    int formula_choice;
-    char repeat_category;
+void calculate_mean(int data[], int n) {
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        total += data[i];
+    }
+    float mean = (float)total / n;
+    printf("Mean = %.2f\n", mean);
+}
 
-    do {
-        printf("\nPopulation Distribution Formulas:\n");
-        printf("1. Mean\n2. Median\n3. Mode\n4. Quartile 1\n5. Quartile 3\n6. Range\n7. Interquartile Range\n");
-        printf("8. Variance\n9. Standard Deviation\n10. Coefficient of Variance\n11. Z Score\n");
-        printf("Choose a formula (1-11): ");
-        formula_choice = get_choice(1, 11);
+void calculate_median(int data[], int n) {
+    sort(data, n);
+    float median;
+    if (n % 2 != 0) {
+        median = data[n / 2];
+    } else {
+        median = (data[n / 2 - 1] + data[n / 2]) / 2.0;
+    }
+    printf("Median = %.2f\n", median);
+}
 
-        switch (formula_choice) {
-            case 1: calculate_mean(); break;
-            case 2: calculate_median(); break;
-            case 3: calculate_mode(); break;
-            case 4: calculate_quartile1(); break;
-            case 5: calculate_quartile3(); break;
-            case 6: calculate_range(); break;
-            case 7: calculate_interquartile_range(); break;
-            case 8: calculate_variance(); break;
-            case 9: calculate_standard_deviation(); break;
-            case 10: calculate_coefficient_variance(); break;
-            case 11: calculate_z_score(); break;
+void calculate_mode(int data[], int n) {
+    int besar = 0, modus = data[0];
+    for (int i = 0; i < n; ++i) {
+        int count = 0;
+        for (int j = 0; j < n; ++j) {
+            if (data[j] == data[i])
+                ++count;
         }
-
-        printf("Would you like to use another formula in Population Distribution? (y/n): ");
-        repeat_category = get_yes_no();
-
-    } while (repeat_category == 'y' || repeat_category == 'Y');
-}
-
-// sample distribution menu
-void sample_distribution() {
-    int formula_choice;
-    char repeat_category;
-
-    do {
-        printf("\nSample Distribution Formulas:\n");
-        printf("1. Mean\n2. Median\n3. Mode\n4. Quartile 1\n5. Quartile 3\n6. Range\n7. Interquartile Range\n");
-        printf("8. Variance\n9. Standard Deviation\n10. Coefficient of Variance\n11. Z Score\n12. Standard Error\n");
-        printf("Choose a formula (1-12): ");
-        formula_choice = get_choice(1, 12);
-
-        switch (formula_choice) {
-            case 1: calculate_mean(); break;
-            case 2: calculate_median(); break;
-            case 3: calculate_mode(); break;
-            case 4: calculate_quartile1(); break;
-            case 5: calculate_quartile3(); break;
-            case 6: calculate_range(); break;
-            case 7: calculate_interquartile_range(); break;
-            case 8: calculate_variance(); break;
-            case 9: calculate_standard_deviation(); break;
-            case 10: calculate_coefficient_variance(); break;
-            case 11: calculate_z_score(); break;
-            case 12: calculate_standard_error(); break;
+        if (count >= besar) {
+            besar = count;
+            modus = data[i];
         }
-
-        printf("Would you like to use another formula in Sample Distribution? (y/n): ");
-        repeat_category = get_yes_no();
-
-    } while (repeat_category == 'y' || repeat_category == 'Y');
+    }
+    printf("Mode = %d\n", modus);
 }
 
-// discrete probability distribution menu
-void discrete_distribution() {
-    int formula_choice;
-    char repeat_category;
-
-    do {
-        printf("\nDiscrete Probability Distribution:\n");
-        printf("1. Binomial Distribution\n2. Poisson Distribution\n3. Hypergeometric Distribution\n");
-        printf("Choose a formula (1-3): ");
-        formula_choice = get_choice(1, 3);
-
-        switch (formula_choice) {
-            case 1: binomial_distribution(); break;
-            case 2: poisson_distribution(); break;
-            case 3: hypergeometric_distribution(); break;
-        }
-
-        printf("Would you like to use another formula in Discrete Distribution? (y/n): ");
-        repeat_category = get_yes_no();
-
-    } while (repeat_category == 'y' || repeat_category == 'Y');
+void calculate_quartile1(int data[], int n) {
+    sort(data, n);
+    float Q1;
+    int letak = (n + 1) / 4;
+    Q1 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
+    printf("Quartile 1 = %.2f\n", Q1);
 }
 
-// continuous probability distribution menu
-void continuous_distribution() {
-    int formula_choice;
-    char repeat_category;
-
-    do {
-        printf("\nContinuous Probability Distribution:\n");
-        printf("1. Normal Distribution\n2. Uniform Distribution\n");
-        printf("Choose a formula (1-2): ");
-        formula_choice = get_choice(1, 2);
-
-        switch (formula_choice) {
-            case 1: normal_distribution(); break;
-            case 2: uniform_distribution(); break;
-        }
-
-        printf("Would you like to use another formula in Continuous Distribution? (y/n): ");
-        repeat_category = get_yes_no();
-
-    } while (repeat_category == 'y' || repeat_category == 'Y');
+void calculate_quartile3(int data[], int n) {
+    sort(data, n);
+    float Q3;
+    int letak = 3 * (n + 1) / 4;
+    Q3 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
+    printf("Quartile 3 = %.2f\n", Q3);
 }
 
-// formula funcs (implementation placeholders)
-int calculate_mean(int data[], int n) { 
-	int i,total=0;
-	float mean;
-	for(i=0;i<n;i++){
-		total+=data[i];
-	}
-	mean=total/n;
-	printf("Mean = %.2f\n",mean); 
-}
-int calculate_median(int data[], int n) {
-	int posisi;
-	float median;
-	if(n%2 != 0){
-		posisi=(n+1)/2;
-		median=data[posisi];
-	}else{
-		posisi=n/2;
-		median=(data[posisi]+data[posisi+1])/2;
-	}
-	printf("Median = %.2f\n", median); 
-}
-void calculate_mode() { 
-	printf("Calculating Mode\n"); 
-}
-int calculate_quartile1() { 
-	int posisi;
-	float quartile1;
-	if(n%2 != 0){
-		posisi=(n+1)/4;
-		median=data[posisi];
-	}else{
-		posisi=n/4;
-		median=(data[posisi]+data[posisi+1])/2;
-	}
-	printf("Median = %.2f\n", quartile1); 
-}
-int calculate_quartile3(int data[], int n) {
-	int posisi;
-	float quartile3;
-	if(n%2 != 0){
-		posisi=3*(n+1)/4;
-		median=data[posisi];
-	}else{
-		posisi=3*n/4;
-		median=(data[posisi]+data[posisi+1])/2;
-	}
-	printf("Median = %.2f\n", quartile3);  
-}
-int calculate_range(int data[], int n) { 
-	printf("Range = %d\n",data[n] - data[0]); 
-}
-void calculate_interquartile_range() { 
-	printf("Calculating Interquartile Range\n"); 
-}
-void calculate_variance() { 
-	printf("Calculating Variance\n"); 
-}
-void calculate_standard_deviation() { 
-	printf("Calculating Standard Deviation\n"); 
-}
-void calculate_coefficient_variance() { 
-	printf("Calculating Coefficient of Variance\n"); 
-}
-void calculate_z_score() { 
-	printf("Calculating Z Score\n"); 
-}
-void calculate_standard_error() { 
-	printf("Calculating Standard Error\n");
+void calculate_range(int data[], int n) {
+    sort(data, n);
+    int range = data[n - 1] - data[0];
+    printf("Range = %d\n", range);
 }
 
-void binomial_distribution() { 
-	printf("Calculating Binomial Distribution\n"); 
+void calculate_interquartile_range(int data[], int n) {
+    sort(data, n);
+    float Q1,Q3;
+    int letak = (n + 1) / 4;
+    Q1 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
+    letak = 3 * (n + 1) / 4;
+    Q3 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
+    float interq = Q3 - Q1;
+    printf("Interquartile Range = %.2f\n", interq);
 }
-void poisson_distribution() { 
-	printf("Calculating Poisson Distribution\n"); 
-}
-void hypergeometric_distribution() { 
-	printf("Calculating Hypergeometric Distribution\n"); 
-}
-void normal_distribution() { 
-	printf("Calculating Normal Distribution\n"); 
-}
-void uniform_distribution() { 
-	printf("Calculating Uniform Distribution\n"); 
+
+// Implementasi placeholder untuk fungsi lainnya
+// void calculate_variance(int data[], int n) { printf("Calculating Variance\n"); }
+// void calculate_standard_deviation(int data[], int n) { printf("Calculating Standard Deviation\n"); }
+// void calculate_coefficient_variance(int data[], int n) { printf("Calculating Coefficient of Variance\n"); }
+// void calculate_z_score(int data[], int n) { printf("Calculating Z Score\n"); }
+// void calculate_standard_error(int data[], int n) { printf("Calculating Standard Error\n"); }
+
+void all(int data[], int n) {
+    calculate_mean(data, n);
+    calculate_median(data, n);
+    calculate_mode(data, n);
+    calculate_quartile1(data, n);
+    calculate_quartile3(data, n);
+    calculate_range(data, n);
+    calculate_interquartile_range(data, n);
+    // calculate_variance(data, n);
+    // calculate_standard_deviation(data, n);
+    // calculate_coefficient_variance(data, n);
+    // calculate_z_score(data, n);
+    // calculate_standard_error(data, n);
 }
