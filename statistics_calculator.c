@@ -104,13 +104,13 @@ void calculate_mean(int data[], int n) {
     for (int i = 0; i < n; i++) {
         total += data[i];
     }
-    float mean = (float)total / n;
+    double mean = (double)total / n;
     printf("Mean = %.2f\n", mean);
 }
 
 void calculate_median(int data[], int n) {
     sort(data, n);
-    float median;
+    double median;
     if (n % 2 != 0) {
         median = data[n / 2];
     } else {
@@ -137,7 +137,7 @@ void calculate_mode(int data[], int n) {
 
 void calculate_quartile1(int data[], int n) {
     sort(data, n);
-    float Q1;
+    double Q1;
     int letak = (n + 1) / 4;
     Q1 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
     printf("Quartile 1 = %.2f\n", Q1);
@@ -145,7 +145,7 @@ void calculate_quartile1(int data[], int n) {
 
 void calculate_quartile3(int data[], int n) {
     sort(data, n);
-    float Q3;
+    double Q3;
     int letak = 3 * (n + 1) / 4;
     Q3 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
     printf("Quartile 3 = %.2f\n", Q3);
@@ -159,12 +159,12 @@ void calculate_range(int data[], int n) {
 
 void calculate_interquartile_range(int data[], int n) {
     sort(data, n);
-    float Q1,Q3;
+    double Q1,Q3;
     int letak = (n + 1) / 4;
     Q1 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
     letak = 3 * (n + 1) / 4;
     Q3 = (n % 2 != 0) ? data[letak] : (data[letak - 1] + data[letak]) / 2.0;
-    float interq = Q3 - Q1;
+    double interq = Q3 - Q1;
     printf("Interquartile Range = %.2f\n", interq);
 }
 
