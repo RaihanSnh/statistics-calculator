@@ -99,6 +99,40 @@ int main() {
     return 0;
 }
 
+    do {
+        printf("Menu\n");
+        printf("1.  Mean\n2.  Median\n3.  Mode\n4.  Quartile 1\n5.  Quartile 3\n6.  Range\n7.  Interquartile Range\n");
+        printf("8.  Variance\n9.  Standard Deviation\n10. Coefficient of Variance\n11. Z Score\n12. All\n");
+        printf("0.  Exit\n");
+        printf("Enter your choice (0-12): ");
+        main_choice = get_choice(0, 12);
+
+        switch (main_choice) {
+            case 1: calculate_mean(data, jumlah_data); break;
+            case 2: calculate_median(data, jumlah_data); break;
+            case 3: calculate_mode(data, jumlah_data); break;
+            case 4: calculate_quartile1(data, jumlah_data); break;
+            case 5: calculate_quartile3(data, jumlah_data); break;
+            case 6: calculate_range(data, jumlah_data); break;
+            case 7: calculate_interquartile_range(data, jumlah_data); break;
+            // case 8: calculate_variance(data, jumlah_data); break;
+            // case 9: calculate_standard_deviation(data, jumlah_data); break;
+            // case 10: calculate_coefficient_variance(data, jumlah_data); break;
+            // case 11: calculate_z_score(data, jumlah_data); break;
+            case 12: all(data, jumlah_data); break;
+            case 0:
+                printf("Exit from Menu!\n");
+        }
+
+        printf("Do you want to go back to the Menu? (y/n): ");
+        repeat_main = get_yes_no();
+
+    } while (repeat_main == 'y' || repeat_main == 'Y');
+
+    printf("Thank you for using the calculator!\n");
+    return 0;
+}
+
 void calculate_mean(int data[], int n) {
     int total = 0;
     for (int i = 0; i < n; i++) {
