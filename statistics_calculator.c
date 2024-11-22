@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 // Fungsi untuk kalkulasi statistik umum
 void calculate_mean(int data[], int n);
@@ -9,8 +10,8 @@ void calculate_quartile1(int data[], int n);
 void calculate_quartile3(int data[], int n);
 void calculate_range(int data[], int n);
 void calculate_interquartile_range(int data[], int n);
-// void calculate_variance(int data[], int n);
-// void calculate_standard_deviation(int data[], int n);
+void calculate_variance(int data[], int n);
+void calculate_standard_deviation(int data[], int n);
 // void calculate_coefficient_variance(int data[], int n);
 // void calculate_z_score(int data[], int n);
 void all(int data[], int n);
@@ -81,8 +82,8 @@ int main() {
             case 5: calculate_quartile3(data, jumlah_data); break;
             case 6: calculate_range(data, jumlah_data); break;
             case 7: calculate_interquartile_range(data, jumlah_data); break;
-            // case 8: calculate_variance(data, jumlah_data); break;
-            // case 9: calculate_standard_deviation(data, jumlah_data); break;
+            case 8: calculate_variance(data, jumlah_data); break;
+            case 9: calculate_standard_deviation(data, jumlah_data); break;
             // case 10: calculate_coefficient_variance(data, jumlah_data); break;
             // case 11: calculate_z_score(data, jumlah_data); break;
             case 12: all(data, jumlah_data); break;
@@ -168,8 +169,36 @@ void calculate_interquartile_range(int data[], int n) {
     printf("Interquartile Range = %.2f\n", interq);
 }
 
-// void calculate_variance(int data[], int n) { printf("Calculating Variance\n"); }
-// void calculate_standard_deviation(int data[], int n) { printf("Calculating Standard Deviation\n"); }
+void calculate_variance(int data[], int n){
+    double mean = 0, variance = 0;
+    
+    for (int i = 0; i < n; i++) {
+        mean += data[i];
+    }
+    mean /= n;
+    
+    for(int i=0;i<n;i++){
+        variance += pow(data[i] - mean, 2);
+    }
+    variance /= (n-1);
+    printf("Variance= %.2lf\n",variance); 
+}
+void calculate_standard_deviation(int data[], int n) {
+    double mean = 0, variance = 0;
+    
+    for (int i = 0; i < n; i++) {
+        mean += data[i];
+    }
+    mean /= n;
+    
+    for(int i=0;i<n;i++){
+        variance += pow(data[i] - mean, 2);
+    }
+    variance /= (n-1);
+    
+    double stddev = sqrt(variance);
+    printf("Standard Deviation = %.2lf\n",stddev); 
+}
 // void calculate_coefficient_variance(int data[], int n) { printf("Calculating Coefficient of Variance\n"); }
 // void calculate_z_score(int data[], int n) { printf("Calculating Z Score\n"); }
 // void calculate_standard_error(int data[], int n) { printf("Calculating Standard Error\n"); }
@@ -182,8 +211,8 @@ void all(int data[], int n) {
     calculate_quartile3(data, n);
     calculate_range(data, n);
     calculate_interquartile_range(data, n);
-    // calculate_variance(data, n);
-    // calculate_standard_deviation(data, n);
+    calculate_variance(data, n);
+    calculate_standard_deviation(data, n);
     // calculate_coefficient_variance(data, n);
     // calculate_z_score(data, n);
     // calculate_standard_error(data, n);
